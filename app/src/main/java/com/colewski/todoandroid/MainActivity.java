@@ -1,5 +1,6 @@
 package com.colewski.todoandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +13,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.colewski.todoandroid.Model.TaskModel;
 import com.colewski.todoandroid.Service.TaskService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -32,11 +32,12 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getApplicationContext(), NewTaskActivity.class);
+                startActivity(intent);
             }
         });
 
+        //Affiche toutes les tâches stockées dans la base de donnée
         showAllTask();
     }
 
@@ -63,9 +64,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAllTask() {
+        //Récupère le textView
         TextView contentMainTextView = findViewById(R.id.contentMainTextView);
+        //Récupère toutes les taches
         List<TaskModel> contentList = taskService.getAllTask();
         contentMainTextView.setText("");
+        //Insère toutes les taches dans le textView
         for (TaskModel task : contentList) {
             contentMainTextView.append(task.getContent() + "\n");
         }
