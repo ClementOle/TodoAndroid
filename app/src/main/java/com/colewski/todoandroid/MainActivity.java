@@ -37,12 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TextView contentMainTextView = findViewById(R.id.contentMainTextView);
-        List<TaskModel> contentList = taskService.getAllTask();
-        contentMainTextView.setText("");
-        for (TaskModel task : contentList) {
-            contentMainTextView.append(task.getContent() + "\n");
-        }
+        showAllTask();
     }
 
     @Override
@@ -65,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showAllTask() {
+        TextView contentMainTextView = findViewById(R.id.contentMainTextView);
+        List<TaskModel> contentList = taskService.getAllTask();
+        contentMainTextView.setText("");
+        for (TaskModel task : contentList) {
+            contentMainTextView.append(task.getContent() + "\n");
+        }
     }
 
 
