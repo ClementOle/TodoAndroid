@@ -1,18 +1,28 @@
 package com.colewski.todoandroid;
 
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.colewski.todoandroid.Model.TaskModel;
+import com.colewski.todoandroid.Service.TaskService;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    TaskService taskService;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        taskService = new TaskService(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -26,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        TextView contentMainTextView = findViewById(R.id.contentMainTextView);
+        List<TaskModel> contentList = taskService.getAllTask();
+        contentMainTextView.setText("");
+        for (TaskModel task : contentList) {
+            contentMainTextView.append(task.getContent() + "\n");
+        }
     }
 
     @Override
@@ -49,4 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
